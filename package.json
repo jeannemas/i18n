@@ -1,5 +1,5 @@
 {
-  "name": "@jeannemas/i18n",
+  "name": "@jeanne-mas/i18n",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite dev",
