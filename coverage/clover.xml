@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1737244938182" clover="3.2.0">
+  <project timestamp="1737244938182" name="All files">
+    <metrics statements="38" coveredstatements="38" conditionals="15" coveredconditionals="15" methods="11" coveredmethods="11" elements="64" coveredelements="64" complexity="0" loc="38" ncloc="38" packages="1" files="1" classes="1"/>
+    <file name="i18n.ts" path="/Users/paullouismas/Git/i18n/src/lib/i18n.ts">
+      <metrics statements="38" coveredstatements="38" conditionals="15" coveredconditionals="15" methods="11" coveredmethods="11"/>
+      <line num="43" count="1" type="stmt"/>
+      <line num="50" count="1" type="stmt"/>
+      <line num="60" count="3" type="stmt"/>
+      <line num="80" count="3" type="stmt"/>
+      <line num="81" count="3" type="stmt"/>
+      <line num="85" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="86" count="1" type="stmt"/>
+      <line num="89" count="2" type="stmt"/>
+      <line num="99" count="4" type="stmt"/>
+      <line num="101" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="103" count="2" type="stmt"/>
+      <line num="106" count="2" type="stmt"/>
+      <line num="108" count="2" type="stmt"/>
+      <line num="110" count="2" type="stmt"/>
+      <line num="120" count="7" type="stmt"/>
+      <line num="121" count="7" type="stmt"/>
+      <line num="123" count="7" type="cond" truecount="2" falsecount="0"/>
+      <line num="124" count="3" type="stmt"/>
+      <line num="127" count="4" type="stmt"/>
+      <line num="137" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="138" count="1" type="stmt"/>
+      <line num="142" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="143" count="2" type="stmt"/>
+      <line num="146" count="1" type="stmt"/>
+      <line num="148" count="1" type="stmt"/>
+      <line num="150" count="1" type="stmt"/>
+      <line num="161" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="162" count="1" type="stmt"/>
+      <line num="165" count="2" type="stmt"/>
+      <line num="166" count="2" type="stmt"/>
+      <line num="168" count="2" type="stmt"/>
+      <line num="170" count="2" type="stmt"/>
+      <line num="182" count="2" type="stmt"/>
+      <line num="185" count="4" type="stmt"/>
+      <line num="189" count="3" type="stmt"/>
+      <line num="191" count="1" type="stmt"/>
+      <line num="203" count="3" type="stmt"/>
+      <line num="205" count="3" type="stmt"/>
+    </file>
+  </project>
+</coverage>
