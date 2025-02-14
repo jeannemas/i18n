@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { type GetAvailableLocales, I18N, LocalNotFoundError } from './i18n.js';
+import { type GetAvailableLocales, I18N, LocaleNotFoundError } from './i18n.js';
 
 describe(I18N.name, () => {
   const locales = {
@@ -43,7 +43,7 @@ describe(I18N.name, () => {
       const act = () => new I18N(locales, defaultLocaleIdentifier);
 
       // Assert
-      expect(act).toThrowError(LocalNotFoundError);
+      expect(act).toThrowError(LocaleNotFoundError);
     });
 
     it('should not throw an error if the default locale identifier is in the locales object', () => {
@@ -54,7 +54,7 @@ describe(I18N.name, () => {
       const act = () => new I18N(locales, defaultLocaleIdentifier);
 
       // Assert
-      expect(act).not.toThrow(LocalNotFoundError);
+      expect(act).not.toThrow(LocaleNotFoundError);
     });
   });
 
@@ -129,7 +129,7 @@ describe(I18N.name, () => {
 
       // Act
       const localizer = i18n.localize(localeIdentifier);
-      const result = localizer.foo();
+      const result = localizer.foo;
 
       // Assert
       expect(result).toEqual(locales.en.foo);
@@ -143,20 +143,7 @@ describe(I18N.name, () => {
       const act = () => i18n.localize(localeIdentifier);
 
       // Assert
-      expect(act).toThrowError(LocalNotFoundError);
-    });
-
-    it('should localize the strings with the given values', () => {
-      // Arrange
-      const localeIdentifier = 'en' satisfies GetAvailableLocales<typeof i18n>;
-      const values = { bar: 'baz' };
-
-      // Act
-      const localizer = i18n.localize(localeIdentifier);
-      const result = localizer.bar(values);
-
-      // Assert
-      expect(result).toBe(`foo ${values.bar} baz`);
+      expect(act).toThrowError(LocaleNotFoundError);
     });
 
     it('should localize the nested strings', () => {
@@ -165,7 +152,7 @@ describe(I18N.name, () => {
 
       // Act
       const localizer = i18n.localize(localIdentifier);
-      const result = localizer.nested.child();
+      const result = localizer.nested.child;
 
       // Assert
       expect(result).toBe(locales.en.nested.child);
@@ -207,7 +194,7 @@ describe(I18N.name, () => {
       const act = () => i18n.localizePathname(pathname, localeIdentifier);
 
       // Assert
-      expect(act).toThrowError(LocalNotFoundError);
+      expect(act).toThrowError(LocaleNotFoundError);
     });
   });
 });

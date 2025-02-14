@@ -14,15 +14,7 @@ export type GetAvailableLocales<TI18N extends I18N> =
  */
 export type GetLocale<TI18N extends I18N> = TI18N extends I18N<infer TLocale> ? TLocale : never;
 
-type Accessor<TValue extends string> = (args?: Record<string, unknown>) => TValue;
 type DeepStringObject = { [key: string]: DeepStringObject | string };
-type LocalizedStrings<TLocale extends DeepStringObject> = {
-  [K in keyof TLocale]: TLocale[K] extends string
-    ? Accessor<TLocale[K]>
-    : TLocale[K] extends DeepStringObject
-      ? LocalizedStrings<TLocale[K]>
-      : never;
-};
 
 /**
  * An I18N manager.
@@ -55,10 +47,6 @@ export class I18N<
    */
   readonly #availableLocalesIdentifiers: Set<TAvailableLocales>;
   /**
-   * The cached locales.
-   */
-  readonly #cachedLocales: Map<TAvailableLocales, LocalizedStrings<TLocaleObject>> = new Map();
-  /**
    * The default locale identifier.
    */
   readonly #defaultLocaleIdentifier: TDefaultLocale;
@@ -83,7 +71,7 @@ export class I18N<
     );
 
     if (!this.#availableLocalesIdentifiers.has(defaultLocaleIdentifier)) {
-      throw new LocalNotFoundError(defaultLocaleIdentifier);
+      throw new LocaleNotFoundError(defaultLocaleIdentifier);
     }
 
     this.#defaultLocaleIdentifier = defaultLocaleIdentifier;
@@ -133,21 +121,12 @@ export class I18N<
    * @param locale The locale to get the localization for.
    * @returns The localization for the given locale.
    */
-  localize(locale: TAvailableLocales): LocalizedStrings<TLocaleObject> {
+  localize(locale: TAvailableLocales): TLocaleObject {
     if (!this.#availableLocalesIdentifiers.has(locale)) {
-      throw new LocalNotFoundError(locale);
+      throw new LocaleNotFoundError(locale);
     }
 
-    // If a cached locale already exists, return it.
-    if (this.#cachedLocales.has(locale)) {
-      return this.#cachedLocales.get(locale)!;
-    }
-
-    const localizedStrings = this.#createLocalizedStrings(this.#localesObject[locale]);
-
-    this.#cachedLocales.set(locale, localizedStrings);
-
-    return localizedStrings;
+    return this.#localesObject[locale];
   }
 
   /**
@@ -159,7 +138,7 @@ export class I18N<
    */
   localizePathname(pathname: string, locale: TAvailableLocales): string {
     if (!this.#availableLocalesIdentifiers.has(locale)) {
-      throw new LocalNotFoundError(locale);
+      throw new LocaleNotFoundError(locale);
     }
 
     const canonicalPathname = this.getCanonicalPathname(pathname);
@@ -169,39 +148,14 @@ export class I18N<
 
     return segments.join('/');
   }
-
-  /**
-   * Create the localized strings.
-   *
-   * @param object The object to create the localized strings from.
-   * @returns The localized strings.
-   */
-  #createLocalizedStrings<TObject extends DeepStringObject>(
-    object: TObject,
-  ): LocalizedStrings<TObject> {
-    return Object.fromEntries(
-      Object.entries(object).map(
-        ([key, value]) =>
-          [
-            key,
-            typeof value === 'string'
-              ? (args: Record<string, unknown> = {}) =>
-                  Object.entries(args).reduce(
-                    (accumulator, [argKey, argValue]) =>
-                      accumulator.replaceAll(`{${argKey}}`, String(argValue)),
-                    value,
-                  )
-              : this.#createLocalizedStrings(value),
-          ] as const,
-      ),
-    ) as LocalizedStrings<TObject>;
-  }
 }
 
-export class LocalNotFoundError extends Error {
+export class LocaleNotFoundError extends Error {
   constructor(localeIdentifier: string) {
     super(`The key '${localeIdentifier}' was not found in the locales object.`);
 
-    this.name = LocalNotFoundError.name;
+    this.name = LocaleNotFoundError.name;
+
+    Error.captureStackTrace?.(this, LocaleNotFoundError);
   }
 }
