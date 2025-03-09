@@ -1,5 +1,11 @@
 # @jeannemas/i18n
 
+## 2.1.0
+
+### Minor Changes
+
+- 099810a: Added keys and values accessors
+
 ## 2.0.0
 
 ### Major Changes
