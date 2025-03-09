@@ -15,6 +15,11 @@ export type GetAvailableLocales<TI18N extends I18N> =
 export type GetLocale<TI18N extends I18N> = TI18N extends I18N<infer TLocale> ? TLocale : never;
 
 type DeepStringObject = { [key: string]: DeepStringObject | string };
+type DeepStringObjectPath<TDeepStringObject> = {
+  [K in keyof TDeepStringObject]: TDeepStringObject[K] extends string
+    ? string[]
+    : DeepStringObjectPath<TDeepStringObject[K]>;
+};
 
 /**
  * An I18N manager.
@@ -40,6 +45,28 @@ export class I18N<
    */
   get defaultLocale(): TDefaultLocale {
     return this.#defaultLocaleIdentifier;
+  }
+
+  /**
+   * The keys to the locale object.
+   */
+  get keys(): DeepStringObjectPath<TLocaleObject> {
+    return _(this.#localesObject[this.defaultLocale], []) as DeepStringObjectPath<TLocaleObject>;
+
+    function _(object: DeepStringObject, path: string[]) {
+      return new Proxy(object, {
+        get(target, p: string) {
+          const value = target[p];
+          const udpatedPath = [...path, p];
+
+          if (typeof value === 'object') {
+            return _(value, udpatedPath);
+          }
+
+          return udpatedPath;
+        },
+      });
+    }
   }
 
   /**
@@ -75,6 +102,35 @@ export class I18N<
     }
 
     this.#defaultLocaleIdentifier = defaultLocaleIdentifier;
+  }
+
+  /**
+   * Get the value from the given path in the locale object.
+   *
+   * @param localeObject The locale object.
+   * @param path The path to get the value from.
+   * @returns The value from the given path in the locale object.
+   */
+  fromValues(localeObject: TLocaleObject, path: string[]): string {
+    let value: DeepStringObject | string = localeObject;
+
+    for (const part of path) {
+      if (typeof value !== 'object') {
+        throw new InvalidPathError();
+      }
+
+      value = value[part];
+
+      if (value === undefined) {
+        throw new InvalidPathError();
+      }
+    }
+
+    if (typeof value !== 'string') {
+      throw new InvalidPathError();
+    }
+
+    return value;
   }
 
   /**
@@ -150,12 +206,22 @@ export class I18N<
   }
 }
 
+export class InvalidPathError extends Error {
+  constructor() {
+    super('Invalid path');
+
+    this.name = InvalidPathError.name;
+
+    Error.captureStackTrace?.(this, this.constructor);
+  }
+}
+
 export class LocaleNotFoundError extends Error {
   constructor(localeIdentifier: string) {
     super(`The key '${localeIdentifier}' was not found in the locales object.`);
 
     this.name = LocaleNotFoundError.name;
 
-    Error.captureStackTrace?.(this, LocaleNotFoundError);
+    Error.captureStackTrace?.(this, this.constructor);
   }
 }
