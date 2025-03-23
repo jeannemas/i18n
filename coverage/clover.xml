@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1741537082645" clover="3.2.0">
-  <project timestamp="1741537082645" name="All files">
+<coverage generated="1742767882080" clover="3.2.0">
+  <project timestamp="1742767882080" name="All files">
     <metrics statements="50" coveredstatements="50" conditionals="18" coveredconditionals="18" methods="13" coveredmethods="13" elements="81" coveredelements="81" complexity="0" loc="50" ncloc="50" packages="1" files="1" classes="1"/>
     <file name="i18n.ts" path="/Users/paullouismas/Git/i18n/src/lib/i18n.ts">
       <metrics statements="50" coveredstatements="50" conditionals="18" coveredconditionals="18" methods="13" coveredmethods="13"/>
