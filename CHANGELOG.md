@@ -1,5 +1,11 @@
 # @jeannemas/i18n
 
+## 2.1.3
+
+### Patch Changes
+
+- Added default export explicitly
+
 ## 2.1.2
 
 ### Patch Changes
