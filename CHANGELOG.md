@@ -1,5 +1,11 @@
 # @jeannemas/i18n
 
+## 2.1.1
+
+### Patch Changes
+
+- Added main entry to package.json
+
 ## 2.1.0
 
 ### Minor Changes
