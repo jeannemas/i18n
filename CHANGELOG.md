@@ -1,5 +1,11 @@
 # @jeannemas/i18n
 
+## 2.1.4
+
+### Patch Changes
+
+- Made default export the last entry
+
 ## 2.1.3
 
 ### Patch Changes

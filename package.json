@@ -1,6 +1,6 @@
 {
   "name": "@jeanne-mas/i18n",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && npm run prepack",
@@ -23,8 +23,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js",
-      "svelte": "./dist/index.js"
+      "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.js",
